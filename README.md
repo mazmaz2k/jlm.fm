@@ -2,7 +2,7 @@
 
 repository with wiki for a team project for JLM.FM at JCE's software engineering course [http://jlm.fm/] 
 
-![project logo (this one for is taken from basecamp - a project management service)](http://jlm.fm/home/wp-content/uploads/2014/07/%D7%9B%D7%91%D7%99%D7%A1%D7%94-%D7%A2%D7%A8%D7%95%D7%9A.jpg)
+![project logo (this one for is taken from basecamp - a project management service)](http://oi65.tinypic.com/1zvxrir.jpg)
 
 ## Tools & Practices
 We're trying to use the best tools and practices in order to produce a quality enginneered product.
