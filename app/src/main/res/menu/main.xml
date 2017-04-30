@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" /-->
+    <item
+        android:id="@+id/go_to_web"
+        android:icon="@drawable/web"
+        android:orderInCategory="101"
+        android:title="user"
+        app:showAsAction="always"></item>
+    <item
+        android:id="@+id/action_facebook"
+        android:icon="@drawable/facebook"
+        android:orderInCategory="102"
+        android:title="Search"
+
+        app:showAsAction="always"></item>
+    <item
+        android:id="@+id/action_user"
+        android:icon="@drawable/ic_user"
+        android:orderInCategory="103"
+        android:title="user"
+        app:showAsAction="always"></item>
+
+
+    <item
+        android:id="@+id/action_aboutJ"
+        android:orderInCategory="200"
+        android:title="@string/action"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_aboutD"
+        android:orderInCategory="300"
+        android:title="@string/developers"
+        android:visible="true"
+        />
+</menu>
