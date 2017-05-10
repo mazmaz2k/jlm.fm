@@ -37,22 +37,22 @@ This project is developed as part of the requirements for a [software engineerin
 
 Please visit our wiki for furthur project info: 
 
-### [User Manual](../../wiki/user-manual)
+### [User Manual](https://github.com/mazmaz2k/jlm.fm/wiki/User-Manual#User-Manual)
 
 ### [Team Page](https://github.com/mazmaz2k/jlm.fm/wiki/Team)
 
 ### Project Documents
-- [Project Idea](docs/idea.pdf) ([Presentation](docs/idea-slides.pdf))
-- [Project Inception](../../wiki/inception)
-- [Software Requirements Specification](../../wiki/srs)
-- [Software Design Specification](../../wiki/sds)
+- [Project Idea](https://github.com/mazmaz2k/jlm.fm/wiki) 
+- [Project Inception](https://github.com/mazmaz2k/jlm.fm/wiki/Inception-Planning#inception-Planning)
+- [Software Requirements Specification](https://github.com/mazmaz2k/jlm.fm/wiki/SRS#srs)
+- [Software Design Specification](https://github.com/mazmaz2k/jlm.fm/wiki/SDS#sds)
 
 ### Iteration Pages
-- [Iteration 0 - ZFR](../../wiki/iter0-zfr)
-- [Iteration 1 - MVP]()
-- [Iteration 2 - Feature X]()
-- [Iteration 3 - Feature Y]()
-- [Iteration 4 - Feature Z]()
+- [Iteration 0 - ZFR](https://github.com/mazmaz2k/jlm.fm/wiki/Iteration-0-ZFR#Iteration-0-ZFR)
+- [Iteration 1 - MVP](https://github.com/mazmaz2k/jlm.fm/wiki/Iteration-1--MVP#Iteration-1---MVP)
+- [Iteration 2 ](https://github.com/mazmaz2k/jlm.fm/wiki/Iteration-2#Iteration-2)
+- [Iteration 3 ](https://github.com/mazmaz2k/jlm.fm/wiki/Iteration-3%23Iteration-3#Iteration-3)
+- [Iteration 4 - Tests](https://github.com/mazmaz2k/jlm.fm/wiki/Iteration-4%23Iteration-4#Iteration-4)
 
 
 
