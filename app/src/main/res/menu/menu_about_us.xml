@@ -1,12 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.radio.fm.jlm.jlmfm.AboutUs">
+    tools:context="com.radio.fm.jlm.jlmfm2.AboutUs">
     <!--item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" /-->
+           android:id="@+id/action_settings"
+           android:orderInCategory="100"
+           android:title="@string/action_settings"
+           app:showAsAction="never" /-->
     <item
         android:id="@+id/go_to_web"
         android:icon="@drawable/web"
@@ -40,5 +40,5 @@
         android:orderInCategory="300"
         android:title="@string/developers"
         android:visible="true"
-        />>
+        />
 </menu>
