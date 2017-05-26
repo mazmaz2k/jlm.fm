@@ -40,9 +40,10 @@ public class MainActivity extends AppCompatActivity
     private ImageView re;
     private ImageView bl;
     private Button mute;
-    //private Button exitApp;
+    private Button share;
     private boolean prepared;
     private boolean isPressed;
+    private boolean isPressed2;
     private boolean started;
 
     public static boolean notificationB=false;
@@ -89,18 +90,16 @@ public class MainActivity extends AppCompatActivity
         prepared = false;
         started = true;
         isPressed =true;
+        isPressed2 =true;
         play = (Button) findViewById(R.id.playBtn);
-        //exitApp = (Button) findViewById(R.id.exitBtn);
         play.setEnabled(false);
-       /* exitApp.setOnClickListener(new View.OnClickListener() {
+        share=(Button)findViewById(R.id.shareBtn);
+        share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onDestroy();
-                finish();
-                System.exit(0);
+                shareIt();
             }
-        });*/
-        //play.setText("LOADING..");
+        });
         mute=(Button)  findViewById(R.id.muteBtn);
         mute.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +111,7 @@ public class MainActivity extends AppCompatActivity
                     amanager.setStreamVolume(AudioManager.STREAM_MUSIC,0, AudioManager.FLAG_SHOW_UI + AudioManager.FLAG_PLAY_SOUND);
                 }else{
                     isPressed =true;
-                    mute.setBackgroundResource(R.drawable.mute2);
+                    mute.setBackgroundResource(R.drawable.mute);
                     amanager.setStreamVolume(AudioManager.STREAM_MUSIC,amanager.getStreamMaxVolume(AudioManager.STREAM_RING), AudioManager.FLAG_SHOW_UI + AudioManager.FLAG_PLAY_SOUND);
 
                 }
@@ -290,6 +289,8 @@ public class MainActivity extends AppCompatActivity
         if(started) {
             started = false;
             radio.pause();
+            play.setBackgroundResource(R.drawable.play_2);
+
             // play.setText("PLAY");
             //startActivityForResult(new Intent(MainActivity.this,Main2Activity.class),1);
         }
@@ -297,6 +298,8 @@ public class MainActivity extends AppCompatActivity
         {
             started = true;
             radio.start();
+            play.setBackgroundResource(R.drawable.play_disabled);
+
             // play.setText("PAUSE");
             // startActivityForResult(new Intent(MainActivity.this,Main2Activity.class),1);
 
