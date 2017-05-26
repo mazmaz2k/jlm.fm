@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
     private boolean isPressed;
     private boolean started;
 
-    public static boolean notificationB=true;
+    public static boolean notificationB=false;
     private MediaPlayer radio;
     private static final int noficationID = 583321;
     private NotificationCompat.Builder notification;
@@ -252,12 +252,12 @@ public class MainActivity extends AppCompatActivity
 
        /* if (id == R.id.nav_camera) {
             // Handle the camera action
-        } else */if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
             startActivityForResult(new Intent(MainActivity.this,picSlider.class),1);
 
-        } else if (id == R.id.nav_manage) {
+        } else */if (id == R.id.nav_manage) {
             startActivityForResult(new Intent(MainActivity.this,SettingsActivity.class),1);
 
         } else if (id == R.id.nav_share) {

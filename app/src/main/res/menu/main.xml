@@ -17,14 +17,13 @@
         android:icon="@drawable/facebook"
         android:orderInCategory="102"
         android:title="Search"
-
         app:showAsAction="always"></item>
-    <item
+    <!--item
         android:id="@+id/action_user"
         android:icon="@drawable/ic_user"
         android:orderInCategory="103"
         android:title="user"
-        app:showAsAction="always"></item>
+        app:showAsAction="always"/-->
 
 
     <item
@@ -32,10 +31,10 @@
         android:orderInCategory="200"
         android:title="@string/action"
         app:showAsAction="never" />
-    <item
+    <!--item
         android:id="@+id/action_aboutD"
         android:orderInCategory="300"
         android:title="@string/developers"
         android:visible="true"
-        />
+        /-->
 </menu>
