@@ -61,10 +61,9 @@ public class MainActivity extends AppCompatActivity
     private ImageView re;
     private ImageView bl;
     private Button mute;
-    //private Button exitApp;
     private boolean prepared;
     private boolean isPressed;
-    private boolean isPressed2;
+    private Button share;
     private Time time;
     private boolean started;
     private Thread t;
@@ -73,9 +72,7 @@ public class MainActivity extends AppCompatActivity
     private static final int noficationID = 583321;
     private NotificationCompat.Builder notification;
     private Uri soundURI;
-    private Button startBtn;
     private boolean doubleTap = false;
-    private boolean firstPic;
     long timeInMilliseconds = 0L;
     long timeSwapBuff = 0L;
     long updatedTime = 0L;
@@ -93,6 +90,9 @@ public class MainActivity extends AppCompatActivity
             secs = secs % 60;
             int milliseconds = (int) (updatedTime % 1000);
             customHandler.postDelayed(this, 0);
+            if(mins==0) {
+                nextPic();
+            }
         }
     };
 
@@ -100,14 +100,10 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        firstPic=true;
-        if(firstPic){
-            firstPic=false;
-            nextPic();
-        }
+
         //start timer
         startTime = SystemClock.uptimeMillis();
-        customHandler.postDelayed(updateTimerThread, 30000);
+        customHandler.postDelayed(updateTimerThread, 300000);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -118,7 +114,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         //.setAction("Action", null).show();
-                sendEmail();;
+                sendEmail();
             }
         });
 
@@ -140,30 +136,17 @@ public class MainActivity extends AppCompatActivity
         prepared = false;
         started = true;
         isPressed =true;
-        isPressed2 =false;
         play = (Button) findViewById(R.id.playBtn);
-        /*play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isPressed2)
-                {
-                    play.setBackgroundResource(R.drawable.play_2);
-                }else
-                {
-                    play.setBackgroundResource(R.drawable.play_disabled);
-                }
-            }
-        });*/
+
         play.setEnabled(false);
-       /* exitApp.setOnClickListener(new View.OnClickListener() {
+        share=(Button) findViewById(R.id.shareBtn);
+        share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onDestroy();
-                finish();
-                System.exit(0);
+                shareIt();
             }
-        });*/
-        //play.setText("LOADING..");
+        });
+
         mute=(Button)  findViewById(R.id.muteBtn);
         mute.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,12 +174,6 @@ public class MainActivity extends AppCompatActivity
         notification = new NotificationCompat.Builder(MainActivity.this);
         notification.setAutoCancel(true);
         changeLight(started);
-        //startBtn = (Button) findViewById(R.id.fab);
-       /* startBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                sendEmail();
-            }
-        });*/
 
 
 
@@ -230,6 +207,8 @@ public class MainActivity extends AppCompatActivity
         collection.insertOne(document);
         */
         iterator = collection.find().iterator();
+        nextPic();
+
     }
 
     @Override
@@ -321,11 +300,12 @@ public class MainActivity extends AppCompatActivity
             Uri uri = Uri.parse("https://www.facebook.com/jlm.fm/"); // missing 'http://' will cause crashed
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
+            finish();
             return true;
         }else if (id == R.id.action_aboutJ){
             // this.finish();
             startActivityForResult(new Intent(MainActivity.this,AboutUs.class),1);
-            // this.finish();
+            //this.finish();
             return true;
         }else if (id == R.id.action_user){
             // this.finish();
@@ -393,6 +373,7 @@ public class MainActivity extends AppCompatActivity
 
         } else */if (id == R.id.nav_manage) {
             startActivityForResult(new Intent(MainActivity.this,SettingsActivity.class),1);
+            //finish();
 
         } else if (id == R.id.nav_share) {
             shareIt();
@@ -421,6 +402,8 @@ public class MainActivity extends AppCompatActivity
     {
         int id = v.getId();
         //if (R.id.ShowAllNotificationNotification == id)
+
+
         if(started) {
             started = false;
             radio.pause();
