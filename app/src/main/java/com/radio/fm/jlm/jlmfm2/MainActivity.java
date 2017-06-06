@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.NotificationCompat;
@@ -64,9 +65,9 @@ public class MainActivity extends AppCompatActivity
     private boolean prepared;
     private boolean isPressed;
     private boolean isPressed2;
-
+    private Time time;
     private boolean started;
-
+    private Thread t;
     public static boolean notificationB=true;
     private MediaPlayer radio;
     private static final int noficationID = 583321;
@@ -74,12 +75,40 @@ public class MainActivity extends AppCompatActivity
     private Uri soundURI;
     private Button startBtn;
     private boolean doubleTap = false;
+    private boolean firstPic;
+    long timeInMilliseconds = 0L;
+    long timeSwapBuff = 0L;
+    long updatedTime = 0L;
 
+    //timer
+    private Handler customHandler = new Handler();
+    private long startTime = 0L;
+
+    private Runnable updateTimerThread = new Runnable() {
+        public void run() {
+            timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+            updatedTime = timeSwapBuff + timeInMilliseconds;
+            int secs = (int) (updatedTime / 1000);
+            int mins = secs / 60;
+            secs = secs % 60;
+            int milliseconds = (int) (updatedTime % 1000);
+            customHandler.postDelayed(this, 0);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        firstPic=true;
+        if(firstPic){
+            firstPic=false;
+            nextPic();
+        }
+        //start timer
+        startTime = SystemClock.uptimeMillis();
+        customHandler.postDelayed(updateTimerThread, 30000);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -229,7 +258,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    public void nextPic(View view){
+    public void nextPic(){
         //SELECT QUERY
         if (iterator.hasNext()) {
             new DownloadImageTask((ImageView) findViewById(R.id.imageView1))
