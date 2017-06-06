@@ -31,22 +31,43 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.os.StrictMode;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+
+import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener ,View.OnClickListener{
 
+    MongoCollection<BasicDBObject> collection;
+    MongoCursor iterator;
     private final String stream = "http://uk6.internet-radio.com:8418/live";
     private Button play;
     private ImageView re;
     private ImageView bl;
     private Button mute;
-    private Button share;
+    //private Button exitApp;
     private boolean prepared;
     private boolean isPressed;
     private boolean isPressed2;
+
     private boolean started;
 
-    public static boolean notificationB=false;
+    public static boolean notificationB=true;
     private MediaPlayer radio;
     private static final int noficationID = 583321;
     private NotificationCompat.Builder notification;
@@ -90,16 +111,30 @@ public class MainActivity extends AppCompatActivity
         prepared = false;
         started = true;
         isPressed =true;
-        isPressed2 =true;
+        isPressed2 =false;
         play = (Button) findViewById(R.id.playBtn);
-        play.setEnabled(false);
-        share=(Button)findViewById(R.id.shareBtn);
-        share.setOnClickListener(new View.OnClickListener() {
+        /*play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shareIt();
+                if(isPressed2)
+                {
+                    play.setBackgroundResource(R.drawable.play_2);
+                }else
+                {
+                    play.setBackgroundResource(R.drawable.play_disabled);
+                }
             }
-        });
+        });*/
+        play.setEnabled(false);
+       /* exitApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onDestroy();
+                finish();
+                System.exit(0);
+            }
+        });*/
+        //play.setText("LOADING..");
         mute=(Button)  findViewById(R.id.muteBtn);
         mute.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +157,7 @@ public class MainActivity extends AppCompatActivity
         radio = new MediaPlayer();
         radio.setAudioStreamType(AudioManager.STREAM_MUSIC);
         play.setOnClickListener(this);
+
         new PlayerTask().execute(stream);
         notification = new NotificationCompat.Builder(MainActivity.this);
         notification.setAutoCancel(true);
@@ -132,6 +168,39 @@ public class MainActivity extends AppCompatActivity
                 sendEmail();
             }
         });*/
+
+
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+        MongoClientURI uri  = new MongoClientURI("mongodb://doron_97:Doron97@ds155961.mlab.com:55961/pictures_db");
+        MongoClient client = new MongoClient(uri);
+        MongoDatabase db = client.getDatabase(uri.getDatabase());
+
+        collection = db.getCollection("pictures_db", BasicDBObject.class);
+
+        BasicDBObject document = new BasicDBObject();
+
+        //INSERT QUERIES
+        /*
+        document.put("id", "1");
+        document.put("link", "http://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2016/12/11/Pictures/radio_7417c9bc-bf69-11e6-9409-56819dc9550f.jpg");
+        collection.insertOne(document);
+
+        document = new BasicDBObject();
+        document.put("id", "2");
+        document.put("link", "http://cdn.interestingengineering.com/wp-content/uploads/2016/06/6138240034_a4ea109e99_b.jpg");
+        collection.insertOne(document);
+
+        document = new BasicDBObject();
+        document.put("id", "3");
+        document.put("link", "http://www.wxyz-radio.com/Images/mike-on-off-air-sign.gif");
+        collection.insertOne(document);
+        */
+        iterator = collection.find().iterator();
     }
 
     @Override
@@ -157,6 +226,43 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+
+
+    public void nextPic(View view){
+        //SELECT QUERY
+        if (iterator.hasNext()) {
+            new DownloadImageTask((ImageView) findViewById(R.id.imageView1))
+                    .execute(((BasicDBObject) iterator.next()).getString("link"));
+        }else{
+            iterator = collection.find().iterator();
+        }
+
+    }
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -176,12 +282,12 @@ public class MainActivity extends AppCompatActivity
             return true;
         }*/
 
-        if (id == R.id.action_aboutD) {   //noinspection SimplifiableIfStatement
+       /* if (id == R.id.action_aboutD) {   //noinspection SimplifiableIfStatement
             // this.finish();
             startActivityForResult(new Intent(MainActivity.this,AboutUs.class),1);
 
             return true;
-        }else if (id == R.id.action_facebook) {
+        }else*/ if (id == R.id.action_facebook) {
             this.finish();
             Uri uri = Uri.parse("https://www.facebook.com/jlm.fm/"); // missing 'http://' will cause crashed
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -289,19 +395,19 @@ public class MainActivity extends AppCompatActivity
         if(started) {
             started = false;
             radio.pause();
-            play.setBackgroundResource(R.drawable.play_2);
-
             // play.setText("PLAY");
             //startActivityForResult(new Intent(MainActivity.this,Main2Activity.class),1);
+            play.setBackgroundResource(R.drawable.play_2);
+
         }
         else
         {
             started = true;
             radio.start();
-            play.setBackgroundResource(R.drawable.play_disabled);
-
             // play.setText("PAUSE");
             // startActivityForResult(new Intent(MainActivity.this,Main2Activity.class),1);
+            play.setBackgroundResource(R.drawable.play_disabled);
+
 
         }
         changeLight(started);

@@ -8,6 +8,7 @@
           app:showAsAction="never" /-->
     <item
         android:id="@+id/go_to_web"
+        android:checkable="false"
         android:icon="@drawable/web"
         android:orderInCategory="101"
         android:title="user"
