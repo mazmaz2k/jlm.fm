@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity
 
     private Runnable updateTimerThread = new Runnable() {
         public void run() {
+            Time t =new Time();
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
             updatedTime = timeSwapBuff + timeInMilliseconds;
             int secs = (int) (updatedTime / 1000);
@@ -90,7 +91,8 @@ public class MainActivity extends AppCompatActivity
             secs = secs % 60;
             int milliseconds = (int) (updatedTime % 1000);
             customHandler.postDelayed(this, 0);
-            if(mins==0) {
+            int min=t.getMinutes();
+            if((min>=0&&min<=1)||(mins>=60&&mins<=59)) {
                 nextPic();
             }
         }
@@ -103,7 +105,7 @@ public class MainActivity extends AppCompatActivity
 
         //start timer
         startTime = SystemClock.uptimeMillis();
-        customHandler.postDelayed(updateTimerThread, 300000);
+        customHandler.postDelayed(updateTimerThread, 30000);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
