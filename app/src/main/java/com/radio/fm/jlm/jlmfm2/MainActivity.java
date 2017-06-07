@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity
             int milliseconds = (int) (updatedTime % 1000);
             customHandler.postDelayed(this, 0);
             int min=t.getMinutes();
-            if((min>=0&&min<=1)||(mins>=60&&mins<=59)) {
+            if((min==0)||(mins==59)) {
                 nextPic();
             }
         }
