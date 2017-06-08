@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity
 
     //timer
     private Handler customHandler = new Handler();
-    private long startTime = 0L;
+    private long startTime;
 
     private Runnable updateTimerThread = new Runnable() {
         public void run() {
@@ -90,23 +90,33 @@ public class MainActivity extends AppCompatActivity
             int mins = secs / 60;
             secs = secs % 60;
             int milliseconds = (int) (updatedTime % 1000);
-            customHandler.postDelayed(this, 0);
+            //customHandler.postDelayed(this, 30000);
             int min=t.getMinutes();
-            if((min==0)||(mins==59)) {
+            int sec=t.getSecond();
+            if(min==0||mins==15||mins==45||min==30){
+
                 nextPic();
+                //SystemClock.sleep(60000);
+
             }
         }
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        startTime = 0L;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //start timer
-        startTime = SystemClock.uptimeMillis();
-        customHandler.postDelayed(updateTimerThread, 30000);
+       try {
+           startTime = SystemClock.uptimeMillis();
+           customHandler.postDelayed(updateTimerThread, 40000);
+       }catch (Exception e){
 
+           e.printStackTrace();
+
+       }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
