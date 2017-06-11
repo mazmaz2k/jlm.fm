@@ -1,5 +1,6 @@
 package com.radio.fm.jlm.jlmfm2;
 
+import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
@@ -54,6 +55,7 @@ import java.io.InputStream;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener ,View.OnClickListener{
 
+    private static final String TAG ="JLM.FM_app" ;
     MongoCollection<BasicDBObject> collection;
     MongoCursor iterator;
     private final String stream = "http://uk6.internet-radio.com:8418/live";
@@ -94,10 +96,12 @@ public class MainActivity extends AppCompatActivity
             int min=t.getMinutes();
             int sec=t.getSecond();
             if(min==0||mins==15||mins==45||min==30){
-
-                nextPic();
-                //SystemClock.sleep(60000);
-
+                try {
+                    nextPic();
+                    //SystemClock.sleep(60000);
+                }catch (Exception e){
+                    Log.e(TAG,Log.getStackTraceString(e));
+                }
             }
         }
     };
@@ -105,18 +109,27 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         startTime = 0L;
+        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        if(activityManager.getLargeMemoryClass() <= 163840012)
+        {
+            Log.d("test1", "couldn't get enough memory");
+
+        }
         super.onCreate(savedInstanceState);
+        //
         setContentView(R.layout.activity_main);
 
+
         //start timer
-       try {
-           startTime = SystemClock.uptimeMillis();
-           customHandler.postDelayed(updateTimerThread, 40000);
-       }catch (Exception e){
 
-           e.printStackTrace();
+        try {
+            startTime = SystemClock.uptimeMillis();
+            customHandler.postDelayed(updateTimerThread, 40000);
+        } catch (Exception e) {
+            Log.e(TAG,Log.getStackTraceString(e));
+           // e.printStackTrace();
 
-       }
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -124,8 +137,8 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        //.setAction("Action", null).show();
+                // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //.setAction("Action", null).show();
                 sendEmail();
             }
         });
@@ -140,18 +153,16 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
-
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         soundURI = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         prepared = false;
         started = true;
-        isPressed =true;
+        isPressed = true;
         play = (Button) findViewById(R.id.playBtn);
 
         play.setEnabled(false);
-        share=(Button) findViewById(R.id.shareBtn);
+        share = (Button) findViewById(R.id.shareBtn);
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,25 +170,25 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        mute=(Button)  findViewById(R.id.muteBtn);
+        mute = (Button) findViewById(R.id.muteBtn);
         mute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AudioManager amanager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
-                if(isPressed) {
-                    isPressed =false;
+                AudioManager amanager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                if (isPressed) {
+                    isPressed = false;
                     mute.setBackgroundResource(R.drawable.unmute);
-                    amanager.setStreamVolume(AudioManager.STREAM_MUSIC,0, AudioManager.FLAG_SHOW_UI + AudioManager.FLAG_PLAY_SOUND);
-                }else{
-                    isPressed =true;
-                    mute.setBackgroundResource(R.drawable.mute);
-                    amanager.setStreamVolume(AudioManager.STREAM_MUSIC,amanager.getStreamMaxVolume(AudioManager.STREAM_RING), AudioManager.FLAG_SHOW_UI + AudioManager.FLAG_PLAY_SOUND);
+                    amanager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_SHOW_UI + AudioManager.FLAG_PLAY_SOUND);
+                } else {
+                    isPressed = true;
+                    mute.setBackgroundResource(R.mipmap.mute);
+                    amanager.setStreamVolume(AudioManager.STREAM_MUSIC, amanager.getStreamMaxVolume(AudioManager.STREAM_RING), AudioManager.FLAG_SHOW_UI + AudioManager.FLAG_PLAY_SOUND);
 
                 }
             }
         });
-        re =(ImageView) findViewById(R.id.imgRed);
-        bl =(ImageView) findViewById(R.id.imgBlack);
+        re = (ImageView) findViewById(R.id.imgRed);
+        bl = (ImageView) findViewById(R.id.imgBlack);
         radio = new MediaPlayer();
         radio.setAudioStreamType(AudioManager.STREAM_MUSIC);
         play.setOnClickListener(this);
@@ -188,17 +199,22 @@ public class MainActivity extends AppCompatActivity
         changeLight(started);
 
 
-
-        if (android.os.Build.VERSION.SDK_INT > 9) {
+        if (android.os.Build.VERSION.SDK_INT > 20) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
 
-        MongoClientURI uri  = new MongoClientURI("mongodb://doron_97:Doron97@ds155961.mlab.com:55961/pictures_db");
+        MongoClientURI uri = new MongoClientURI("mongodb://doron_97:Doron97@ds155961.mlab.com:55961/pictures_db");
         MongoClient client = new MongoClient(uri);
-        MongoDatabase db = client.getDatabase(uri.getDatabase());
 
-        collection = db.getCollection("pictures_db", BasicDBObject.class);
+        try {
+            MongoDatabase db = client.getDatabase(uri.getDatabase());
+            collection = db.getCollection("pictures_db", BasicDBObject.class);
+        }catch (Exception e) {
+            Log.e(TAG,Log.getStackTraceString(e));
+           // e.printStackTrace();
+        }
+
 
         BasicDBObject document = new BasicDBObject();
 
@@ -219,8 +235,14 @@ public class MainActivity extends AppCompatActivity
         collection.insertOne(document);
         */
         iterator = collection.find().iterator();
-        nextPic();
+        try {
+            nextPic();
+        } catch (Exception e) {
 
+           // e.printStackTrace();
+            Log.e(TAG,Log.getStackTraceString(e));
+
+        }
     }
 
     @Override
@@ -251,9 +273,11 @@ public class MainActivity extends AppCompatActivity
 
     public void nextPic(){
         //SELECT QUERY
-        if (iterator.hasNext()) {
+        if (iterator.hasNext())
+        {
             new DownloadImageTask((ImageView) findViewById(R.id.imageView1))
                     .execute(((BasicDBObject) iterator.next()).getString("link"));
+
         }else{
             iterator = collection.find().iterator();
         }
