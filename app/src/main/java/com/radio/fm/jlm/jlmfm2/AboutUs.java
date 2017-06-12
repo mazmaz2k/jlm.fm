@@ -35,7 +35,7 @@ public class AboutUs extends AppCompatActivity {
     private void sendEmail() {
         Intent intent = new Intent(Intent.ACTION_SENDTO)
                 .setData(new Uri.Builder().scheme("mailto").build())
-                .putExtra(Intent.EXTRA_EMAIL, new String[]{ "John Smith <johnsmith@yourdomain.com>" })
+                .putExtra(Intent.EXTRA_EMAIL, new String[]{ "JLM.FM ContactUs <jlm.fm.radio@gmail.com>" })
                 .putExtra(Intent.EXTRA_SUBJECT, "Email subject")
                 .putExtra(Intent.EXTRA_TEXT, "Email body")
                 ;

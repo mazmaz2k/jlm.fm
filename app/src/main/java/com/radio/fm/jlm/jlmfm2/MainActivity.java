@@ -92,10 +92,10 @@ public class MainActivity extends AppCompatActivity
             int mins = secs / 60;
             secs = secs % 60;
             int milliseconds = (int) (updatedTime % 1000);
-            //customHandler.postDelayed(this, 30000);
+            customHandler.postDelayed(this, 40000);
             int min=t.getMinutes();
             int sec=t.getSecond();
-            if(min==0||mins==15||mins==45||min==30){
+            if(min==0||min==15||min==30||min==45||(mins % 5==0)){
                 try {
                     nextPic();
                     //SystemClock.sleep(60000);
@@ -110,21 +110,13 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         startTime = 0L;
         ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        if(activityManager.getLargeMemoryClass() <= 163840012)
-        {
-            Log.d("test1", "couldn't get enough memory");
-
-        }
         super.onCreate(savedInstanceState);
         //
         setContentView(R.layout.activity_main);
-
-
         //start timer
-
         try {
             startTime = SystemClock.uptimeMillis();
-            customHandler.postDelayed(updateTimerThread, 40000);
+            customHandler.postDelayed(updateTimerThread, 30000);
         } catch (Exception e) {
             Log.e(TAG,Log.getStackTraceString(e));
            // e.printStackTrace();
@@ -479,7 +471,7 @@ public class MainActivity extends AppCompatActivity
     private void sendEmail() {
         Intent intent = new Intent(Intent.ACTION_SENDTO)
                 .setData(new Uri.Builder().scheme("mailto").build())
-                .putExtra(Intent.EXTRA_EMAIL, new String[]{ "John Smith <johnsmith@yourdomain.com>" })
+                .putExtra(Intent.EXTRA_EMAIL, new String[]{ "JLM.FM ContactUs <jlm.fm.radio@gmail.com>" })
                 .putExtra(Intent.EXTRA_SUBJECT, "Email subject")
                 .putExtra(Intent.EXTRA_TEXT, "Email body")
                 ;
