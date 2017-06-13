@@ -81,28 +81,7 @@ public class MainActivity extends AppCompatActivity
     private Handler customHandler = new Handler();
     private long startTime;
 
-    private Runnable updateTimerThread = new Runnable() {
-        public void run() {
-            Time t =new Time();
-            timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
-            updatedTime = timeSwapBuff + timeInMilliseconds;
-            int secs = (int) (updatedTime / 1000);
-            int mins = secs / 60;
-            secs = secs % 60;
-            //int milliseconds = (int) (updatedTime % 1000);
-            customHandler.postDelayed(this, 40000);
-            int min=t.getMinutes();
-            //int sec=t.getSecond();
-            if(min==0||min==15||min==30||min==45||(mins % 5==0)){
-                try {
-                    nextPic();
-                    //SystemClock.sleep(60000);
-                }catch (Exception e){
-                    Log.e(TAG,Log.getStackTraceString(e));
-                }
-            }
-        }
-    };
+  
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -234,7 +213,29 @@ public class MainActivity extends AppCompatActivity
 
         }
     }
-
+  private Runnable updateTimerThread = new Runnable() {
+        public void run() {
+            Time t =new Time();
+            timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+            updatedTime = timeSwapBuff + timeInMilliseconds;
+            int secs = (int) (updatedTime / 1000);
+            int mins = secs / 60;
+            secs = secs % 60;
+            //int milliseconds = (int) (updatedTime % 1000);
+            customHandler.postDelayed(this, 40000);
+            int min=t.getMinutes();
+            //int sec=t.getSecond();
+            if(min==0||min==15||min==30||min==45||(mins % 5==0)){
+                try {
+                    nextPic();
+                    //SystemClock.sleep(60000);
+                }catch (Exception e){
+                    Log.e(TAG,Log.getStackTraceString(e));
+                }
+            }
+        }
+    };
+    
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -254,7 +255,7 @@ public class MainActivity extends AppCompatActivity
             }, 3000);
         }else{
             finish();
-            System.exit(0);
+           // System.exit(0);
         }
     }
 
