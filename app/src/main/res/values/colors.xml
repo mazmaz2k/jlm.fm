@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="colorPrimary">#4c262b</color>
-    <color name="colorPrimaryDark">#ad1125</color>
-    <color name="colorAccent">#680a16</color>
-    <!-- overwrite the selected colors because the primary color is to dark -->
-    <color name="material_drawer_selected_text">#536EEA</color>
-    <color name="material_drawer_dark_selected_text">#536EEA</color>
-</resources>
