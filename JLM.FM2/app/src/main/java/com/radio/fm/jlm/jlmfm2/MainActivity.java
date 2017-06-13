@@ -1,6 +1,6 @@
 package com.radio.fm.jlm.jlmfm2;
 
-import android.app.ActivityManager;
+//import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
@@ -81,7 +81,11 @@ public class MainActivity extends AppCompatActivity
     private Handler customHandler = new Handler();
     private long startTime;
 
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> c39705ac6a25cbe7f0f2b9f41de109a0a3609548
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,9 +218,13 @@ public class MainActivity extends AppCompatActivity
 
         }
     }
+<<<<<<< HEAD
 
 
     private Runnable updateTimerThread = new Runnable() {
+=======
+  private Runnable updateTimerThread = new Runnable() {
+>>>>>>> c39705ac6a25cbe7f0f2b9f41de109a0a3609548
         public void run() {
             Time t =new Time();
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
@@ -238,8 +246,12 @@ public class MainActivity extends AppCompatActivity
             }
         }
     };
+<<<<<<< HEAD
 
 
+=======
+    
+>>>>>>> c39705ac6a25cbe7f0f2b9f41de109a0a3609548
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -259,7 +271,11 @@ public class MainActivity extends AppCompatActivity
             }, 3000);
         }else{
             finish();
+<<<<<<< HEAD
             //System.exit(0);
+=======
+           // System.exit(0);
+>>>>>>> c39705ac6a25cbe7f0f2b9f41de109a0a3609548
         }
     }
 
