@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView bl;
     private Button mute;
 
-    private Button exitApp;
+   
     private boolean prepared;
     private boolean isPressed;
     private boolean started;
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
-
+        Button exitApp;
 
         soundURI = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         prepared = false;
