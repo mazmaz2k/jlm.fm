@@ -17,7 +17,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+//import android.support.design.widget.Snackbar;
 import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -35,13 +35,13 @@ import android.widget.Toast;
 import java.io.IOException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
+//import android.os.AsyncTask;
 import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+//import android.support.v7.app.AppCompatActivity;
+//import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
+//import android.view.View;
+//import android.widget.ImageView;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
@@ -49,7 +49,6 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
-import static com.mongodb.assertions.Assertions.isTrue;
 
 import java.io.InputStream;
 
@@ -67,9 +66,7 @@ public class MainActivity extends AppCompatActivity
     private boolean prepared;
     private boolean isPressed;
     private Button share;
-    private Time time;
     private boolean started;
-    private Thread t;
     public static boolean notificationB=true;
     private MediaPlayer radio;
     private static final int noficationID = 583321;
@@ -92,10 +89,10 @@ public class MainActivity extends AppCompatActivity
             int secs = (int) (updatedTime / 1000);
             int mins = secs / 60;
             secs = secs % 60;
-            int milliseconds = (int) (updatedTime % 1000);
+            //int milliseconds = (int) (updatedTime % 1000);
             customHandler.postDelayed(this, 40000);
             int min=t.getMinutes();
-            int sec=t.getSecond();
+            //int sec=t.getSecond();
             if(min==0||min==15||min==30||min==45||(mins % 5==0)){
                 try {
                     nextPic();
@@ -110,7 +107,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         startTime = 0L;
-        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+       // ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         super.onCreate(savedInstanceState);
         //
         setContentView(R.layout.activity_main);
@@ -209,7 +206,7 @@ public class MainActivity extends AppCompatActivity
         }
 
 
-        BasicDBObject document = new BasicDBObject();
+       // BasicDBObject document = new BasicDBObject();
 
         //INSERT QUERIES
         /*
@@ -419,7 +416,7 @@ public class MainActivity extends AppCompatActivity
 
 
     private void shareIt() {
-        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         String shareBody = "Here is the share content body";
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
@@ -429,7 +426,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClick(View v)
     {
-        int id = v.getId();
+       // int id = v.getId();
         //if (R.id.ShowAllNotificationNotification == id)
 
 
