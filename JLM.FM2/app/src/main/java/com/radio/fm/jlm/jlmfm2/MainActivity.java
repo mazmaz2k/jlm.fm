@@ -1,6 +1,6 @@
 package com.radio.fm.jlm.jlmfm2;
 
-import android.app.ActivityManager;
+//import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
