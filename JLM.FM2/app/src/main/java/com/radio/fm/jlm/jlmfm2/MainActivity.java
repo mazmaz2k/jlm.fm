@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener ,View.OnClickListener{
 
     private static final String TAG ="JLM.FM_app" ;
-    MongoCollection<BasicDBObject> collection;
-    MongoCursor iterator;
+    private MongoCollection<BasicDBObject> collection;
+    private MongoCursor iterator;
     private final String stream = "http://uk6.internet-radio.com:8418/live";
     private Button play;
     private ImageView re;
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity
     private Button mute;
     private boolean prepared;
     private boolean isPressed;
-    private Button share;
+
     private boolean started;
     public static boolean notificationB=true;
     private MediaPlayer radio;
@@ -81,31 +81,11 @@ public class MainActivity extends AppCompatActivity
     private Handler customHandler = new Handler();
     private long startTime;
 
-    private Runnable updateTimerThread = new Runnable() {
-        public void run() {
-            Time t =new Time();
-            timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
-            updatedTime = timeSwapBuff + timeInMilliseconds;
-            int secs = (int) (updatedTime / 1000);
-            int mins = secs / 60;
-            secs = secs % 60;
-            //int milliseconds = (int) (updatedTime % 1000);
-            customHandler.postDelayed(this, 40000);
-            int min=t.getMinutes();
-            //int sec=t.getSecond();
-            if(min==0||min==15||min==30||min==45||(mins % 5==0)){
-                try {
-                    nextPic();
-                    //SystemClock.sleep(60000);
-                }catch (Exception e){
-                    Log.e(TAG,Log.getStackTraceString(e));
-                }
-            }
-        }
-    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Button share;
         startTime = 0L;
        // ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         super.onCreate(savedInstanceState);
@@ -235,6 +215,31 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+    private Runnable updateTimerThread = new Runnable() {
+        public void run() {
+            Time t =new Time();
+            timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+            updatedTime = timeSwapBuff + timeInMilliseconds;
+            int secs = (int) (updatedTime / 1000);
+            int mins = secs / 60;
+            secs = secs % 60;
+            //int milliseconds = (int) (updatedTime % 1000);
+            customHandler.postDelayed(this, 40000);
+            int min=t.getMinutes();
+            //int sec=t.getSecond();
+            if(min==0||min==15||min==30||min==45||(mins % 5==0)){
+                try {
+                    nextPic();
+                    //SystemClock.sleep(60000);
+                }catch (Exception e){
+                    Log.e(TAG,Log.getStackTraceString(e));
+                }
+            }
+        }
+    };
+
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -254,7 +259,7 @@ public class MainActivity extends AppCompatActivity
             }, 3000);
         }else{
             finish();
-            System.exit(0);
+            //System.exit(0);
         }
     }
 
@@ -274,7 +279,7 @@ public class MainActivity extends AppCompatActivity
 
     }
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
+        public ImageView bmImage;
 
         public DownloadImageTask(ImageView bmImage) {
             this.bmImage = bmImage;
@@ -419,14 +424,14 @@ public class MainActivity extends AppCompatActivity
         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         String shareBody = "Here is the share content body";
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here");
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
     @Override
     public void onClick(View v)
     {
-       // int id = v.getId();
+       // sharingIntent int id = v.getId();
         //if (R.id.ShowAllNotificationNotification == id)
 
 

@@ -21,7 +21,7 @@ public class SplashScreen extends AppCompatActivity {
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
+                return;
             }
 
             @Override
@@ -35,7 +35,7 @@ public class SplashScreen extends AppCompatActivity {
                         startActivity(t);
                         finish();
                     }
-                },1500);
+                },1000);
               /* try {
                    Thread.sleep(1000);
                }catch (InterruptedException e){
@@ -49,7 +49,7 @@ public class SplashScreen extends AppCompatActivity {
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
+                return;
             }
         });
 
