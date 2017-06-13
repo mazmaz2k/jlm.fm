@@ -24,7 +24,7 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
-    private Toolbar toolbar;
+   // private Toolbar toolbar;
     private final String stream = "http://uk6.internet-radio.com:8418/live";
     private Button play;
     private ImageView re;
