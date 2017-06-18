@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity
             StrictMode.setThreadPolicy(policy);
         }
 
-        MongoClientURI uri = new MongoClientURI("mongodb://doron_97:Doron97@ds155961.mlab.com:55961/pictures_db");
+        MongoClientURI uri = new MongoClientURI("XXXXXXXXXXXXXXXXXXXXXXXXXX"); /*ENTER DB LINK AND PASSWORD*/
         MongoClient client = new MongoClient(uri);
 
         try {
