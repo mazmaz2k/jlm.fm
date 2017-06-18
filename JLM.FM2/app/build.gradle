@@ -3,18 +3,13 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         realese {
-            keyAlias 'Jlm_key'
-            keyPassword '123456'
+            keyAlias */ ENTER KEY ALIAS
+            keyPassword ENTER PASSWORD
             storeFile file('C:/Users/mazma/jlm.jks')
-            storePassword '123456'
+            storePassword ENTER PASSWORD
             //  v2SigningEnabled false
         }
-        config {
-            keyPassword '123456'
-            storeFile file('C:/Users/mazma/jlm.jks')
-            storePassword '123456'
-            keyAlias 'Jlm_key'
-        }
+       
     }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
