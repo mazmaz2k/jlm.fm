@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         realese {
-            keyAlias */ ENTER KEY ALIAS
+            keyAlias  ENTER KEY ALIAS
             keyPassword ENTER PASSWORD
             storeFile file('C:/Users/mazma/jlm.jks')
             storePassword ENTER PASSWORD
